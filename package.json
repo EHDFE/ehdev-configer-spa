@@ -1,10 +1,10 @@
 {
-  "name": "ehdev-configer-test",
-  "version": "1.0.0",
+  "name": "ehdev-configer-spa",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -17,9 +17,55 @@
   },
   "homepage": "https://github.com/EHDFE/ehdev-configer-test#readme",
   "dependencies": {
-    "babel-loader": "^7.1.2"
+    "autoprefixer": "^7.1.6",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "case-sensitive-paths-webpack-plugin": "^2.1.1",
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.5",
+    "html-loader": "^0.5.1",
+    "html-webpack-plugin": "^2.30.1",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
+    "lodash": "^4.17.4",
+    "postcss-loader": "^2.0.8",
+    "react": "^16.0.0",
+    "react-hot-loader": "^3.1.1",
+    "style-loader": "^0.19.0",
+    "url-loader": "^0.6.2",
+    "webpack-chunk-hash": "^0.5.0",
+    "webpack-dev-server": "^2.9.3",
+    "webpack-merge": "^4.1.0"
   },
   "bundleDependencies": [
-    "babel-loader"
-  ]
+    "babel-loader",
+    "webpack-chunk-hash",
+    "html-webpack-plugin",
+    "webpack-merge",
+    "webpack-dev-server",
+    "react-hot-loader",
+    "lodash",
+    "case-sensitive-paths-webpack-plugin",
+    "file-loader",
+    "url-loader",
+    "babel-preset-react",
+    "babel-preset-env",
+    "babel-preset-stage-1",
+    "less-loader",
+    "extract-text-webpack-plugin",
+    "autoprefixer",
+    "babel-core",
+    "less",
+    "html-loader",
+    "react"
+  ],
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "webpack": "^3.8.1"
+  }
 }
