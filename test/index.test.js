@@ -1,3 +1,5 @@
+process.env.WEBPACK_PATH = require.resolve('webpack');
+
 const { expect } = require('chai');
 const { getProdConfig, getDevConfig } = require('../index');
 

@@ -2,7 +2,7 @@
  * development config
  */
 const path = require('path');
-const webpack = require('webpack');
+const webpack = require(process.env.WEBPACK_PATH);
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { camelCase } = require('lodash');
 const autoprefixer = require('autoprefixer');

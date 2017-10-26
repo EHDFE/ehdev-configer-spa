@@ -2,7 +2,7 @@
  * production config
  */
 const path = require('path');
-const webpack = require('webpack');
+const webpack = require(process.env.WEBPACK_PATH);
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const { camelCase } = require('lodash');
