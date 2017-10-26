@@ -1,6 +1,6 @@
 {
   "name": "ehdev-configer-spa",
-  "version": "0.0.3-0",
+  "version": "0.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -43,27 +43,9 @@
     "webpack-dev-server": "^2.9.3",
     "webpack-merge": "^4.1.0"
   },
-  "bundleDependencies": [
-    "babel-loader",
-    "webpack-chunk-hash",
-    "html-webpack-plugin",
-    "webpack-merge",
-    "webpack-dev-server",
-    "react-hot-loader",
-    "lodash",
-    "case-sensitive-paths-webpack-plugin",
-    "file-loader",
-    "url-loader",
-    "babel-preset-react",
-    "babel-preset-env",
-    "babel-preset-stage-1",
-    "less-loader",
-    "extract-text-webpack-plugin",
-    "autoprefixer",
-    "babel-core",
-    "less",
-    "html-loader",
-    "react"
+  "files": [
+    "./src",
+    "index.js"
   ],
   "devDependencies": {
     "chai": "^4.1.2",
