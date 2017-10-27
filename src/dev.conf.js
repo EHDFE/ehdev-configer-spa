@@ -2,8 +2,9 @@
  * development config
  */
 const path = require('path');
-const webpack = require(process.env.WEBPACK_PATH);
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const SHELL_NODE_MODULES_PATH = process.env.SHELL_NODE_MODULES_PATH;
+const webpack = require(path.join(SHELL_NODE_MODULES_PATH, 'webpack'));
+const HtmlWebpackPlugin = require(path.join(SHELL_NODE_MODULES_PATH, 'html-webpack-plugin'));
 const { camelCase } = require('lodash');
 const autoprefixer = require('autoprefixer');
 
@@ -30,8 +31,8 @@ module.exports = async (PROJECT_CONFIG, options) => {
     ];
     if (PROJECT_CONFIG.enableHotModuleReplacement) {
       scripts.unshift(
-        `${require.resolve('webpack-dev-server/client')}?http://localhost:${options.port}`,
-        require.resolve('webpack/hot/dev-server'),
+        `${require.resolve(`${path.join(SHELL_NODE_MODULES_PATH, 'webpack-dev-server')}/client`)}?http://localhost:${options.port}`,
+        require.resolve(`${path.join(SHELL_NODE_MODULES_PATH, 'webpack')}/hot/dev-server`),
       );
       if (PROJECT_CONFIG.framework === 'react') {
         scripts.unshift(require.resolve('react-hot-loader/patch'));

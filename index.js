@@ -14,11 +14,12 @@ const MERGE_STRATEGY = {
   plugins: 'append',
 };
 
+exports.DEFAULT_PROJECT_CONFIG = DEFAULT_PROJECT_CONFIG;
+
 exports.getProdConfig = async (PROJECT_CONFIG, options) => {
-  const config = Object.assign({}, DEFAULT_PROJECT_CONFIG, PROJECT_CONFIG);
   try {
-    const baseConfig = await _getBaseConfig(config, options);
-    const prodConfig = await _getProdConfig(config, options);
+    const baseConfig = await _getBaseConfig(PROJECT_CONFIG, options);
+    const prodConfig = await _getProdConfig(PROJECT_CONFIG, options);
     return merge.smartStrategy(MERGE_STRATEGY)(baseConfig, prodConfig);
   } catch(e) {
     throw Error(e);
@@ -26,10 +27,9 @@ exports.getProdConfig = async (PROJECT_CONFIG, options) => {
 };
 
 exports.getDevConfig = async (PROJECT_CONFIG, options) => {
-  const config = Object.assign({}, DEFAULT_PROJECT_CONFIG, PROJECT_CONFIG);
   try {
-    const baseConfig = await _getBaseConfig(config, options);
-    const devConfig = await _getDevConfig(config, options);
+    const baseConfig = await _getBaseConfig(PROJECT_CONFIG, options);
+    const devConfig = await _getDevConfig(PROJECT_CONFIG, options);
     return merge.smartStrategy(MERGE_STRATEGY)(baseConfig, devConfig);
   } catch(e) {
     throw Error(e);

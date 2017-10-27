@@ -2,9 +2,11 @@
  * production config
  */
 const path = require('path');
-const webpack = require(process.env.WEBPACK_PATH);
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const SHELL_NODE_MODULES_PATH = process.env.SHELL_NODE_MODULES_PATH;
+const webpack = require(path.join(SHELL_NODE_MODULES_PATH, 'webpack'));
+const HtmlWebpackPlugin = require(path.join(SHELL_NODE_MODULES_PATH, 'html-webpack-plugin'));
+const ExtractTextPlugin = require(path.join(SHELL_NODE_MODULES_PATH, 'extract-text-webpack-plugin'));
+const CleanWebpackPlugin = require(path.join(SHELL_NODE_MODULES_PATH, 'clean-webpack-plugin'));
 const { camelCase } = require('lodash');
 const autoprefixer = require('autoprefixer');
 const WebpackChunkHash = require('webpack-chunk-hash');
@@ -150,20 +152,8 @@ module.exports = async (PROJECT_CONFIG, options) => {
           // This loader doesn't use a "test" so it will catch all modules
           // that fall through the other loaders.
           {
+            exclude: [/\.jsx?$/, /\.json$/],
             loader: require.resolve('file-loader'),
-            // Exclude `js` files to keep "css" loader working as it injects
-            // it's runtime that would otherwise processed through "file" loader.
-            // Also exclude `html` and `json` extensions so they get processed
-            // by webpacks internal loaders.
-            exclude: content => {
-              if (ExcludeRegs.some(reg => reg.test(content))) {
-                return true;
-              }
-              if (ExcludeHtmlReg.test(content) && !content.startsWith(APP_DIR)) {
-                return true;
-              }
-              return false;
-            },
             options: {
               name: '[name].[hash:8].[ext]',
             },
@@ -201,6 +191,13 @@ module.exports = async (PROJECT_CONFIG, options) => {
     );
   });
   plugins.push(
+    new CleanWebpackPlugin([
+      PROJECT_CONFIG.buildPath,
+    ], {
+      root: PROJECT_ROOT,
+      verbose: true,
+      dry: false,
+    }),
     new webpack.HashedModuleIdsPlugin(),
     new WebpackChunkHash(),
     // Minify the code.

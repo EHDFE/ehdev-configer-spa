@@ -1,7 +1,8 @@
-process.env.WEBPACK_PATH = require.resolve('webpack');
+const path = require('path');
+process.env.SHELL_NODE_MODULES_PATH = path.join(process.cwd(), 'node_modules');
 
 const { expect } = require('chai');
-const { getProdConfig, getDevConfig } = require('../index');
+const { getProdConfig, getDevConfig, DEFAULT_PROJECT_CONFIG } = require('../index');
 
 describe('exports methods: <<getProdConfig>> and <<getDevConfig>>', () => {
 
@@ -20,7 +21,7 @@ describe('exports methods: <<getProdConfig>> and <<getDevConfig>>', () => {
   });
 
   it('should getDevConfig a valid webpack config', async () => {
-    const devConfig = await getDevConfig();
+    const devConfig = await getDevConfig(DEFAULT_PROJECT_CONFIG);
     expect(devConfig).to.have.all.keys(
       'entry',
       'output',
@@ -42,7 +43,7 @@ describe('exports methods: <<getProdConfig>> and <<getDevConfig>>', () => {
   });
 
   it('should getProdConfig a valid webpack config', async () => {
-    const prodConfig = await getProdConfig();
+    const prodConfig = await getProdConfig(DEFAULT_PROJECT_CONFIG);
     expect(prodConfig).to.have.all.keys(
       'bail',
       'entry',
@@ -60,7 +61,7 @@ describe('exports methods: <<getProdConfig>> and <<getDevConfig>>', () => {
     );
     expect(prodConfig.module.strictExportPresence).to.be.true;
     expect(prodConfig.module.rules[0].oneOf).to.have.lengthOf(5);
-    expect(prodConfig.plugins).to.have.lengthOf(7);
+    expect(prodConfig.plugins).to.have.lengthOf(8);
   });
 
 });

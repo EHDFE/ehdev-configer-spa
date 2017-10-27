@@ -3,7 +3,9 @@
  * TODO:
  * 1. introduce eslint
  */
-const webpack = require(process.env.WEBPACK_PATH);
+const path = require('path');
+const SHELL_NODE_MODULES_PATH = process.env.SHELL_NODE_MODULES_PATH;
+const webpack = require(path.join(SHELL_NODE_MODULES_PATH, 'webpack'));
 const { SOURCE_DIR } = require('./lib');
 
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
