@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/EHDFE/ehdev-configer-test.git"
   },
-  "author": "",
+  "author": "ryan.bian",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/EHDFE/ehdev-configer-test/issues"
@@ -40,28 +40,7 @@
     "webpack-chunk-hash": "^0.5.0",
     "webpack-merge": "^4.1.0"
   },
-  "bundledDependencies": [
-    "autoprefixer",
-    "babel-core",
-    "babel-loader",
-    "babel-preset-env",
-    "babel-preset-react",
-    "babel-preset-stage-1",
-    "case-sensitive-paths-webpack-plugin",
-    "css-loader",
-    "file-loader",
-    "html-loader",
-    "less",
-    "less-loader",
-    "lodash",
-    "postcss-loader",
-    "react",
-    "react-hot-loader",
-    "style-loader",
-    "url-loader",
-    "webpack-chunk-hash",
-    "webpack-merge"
-  ],
+  "bundledDependencies": [],
   "files": [
     "src",
     "index.js"
