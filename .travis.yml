@@ -1,7 +1,16 @@
 language: node_js
 node_js:
-  - "node"
+- node
 
 cache:
   directories:
-    - "node_modules"
+  - node_modules
+  
+deploy:
+  provider: npm
+  email: macisi528@gmail.com
+  api_key:
+    secure: kBTft/9izE81g42R7KXvPvmfnuYDxAETcNUzy/tsPN3ijxMfbyjPzGX1xXuCgtlDonJaQ+fEP8kY3sP/X63E4SApvgfD9ygBfrGPUKYGdb9H7GCRab88iznYfvg3y3KEpqp/hLbJP/XdrSEB5amqRsdZcXTWYf6bGXeyQpTuLMo7LW2VnQjRmdx9CE1uNO3HRr9sYXRbBxx33/rQbDx72mA8qYTNF7tIar9wzdRzsDFWWtEl/rHNS170oS/NiaIkII7S5EjBTn4wC6BLKznfaBOMLJT2+ualRUvbHB8WDS2mLYAKEcboXh0OoCYyMEEkrvk8xTGf/s5IsMTtck3DKWEfISPXSL1LP+06ydYViXFiSC0++AN3XH4FCZ9tWetU3nhGm/gViXkbUylVwSzo9AQVs0pusZ4VIgPoazSkMLy/S9DKqgxZig15QDoRCbfSbMwQrt54ZcVR8W9fvxXGjptEW1JPxXQr0qJ50+Mr35REsXg1JQ0EVH1rWuPXQI5zB96xfFOwJAGupIY15TELZDIhttImdJaJWa1K3WeuH1ZDSJT6gdIyEQgimm/j0Yp1WKTadVcZr4xjlwCV0bgIzi3dWGcxyEtoj+eP1jEsuET7slm6/YRnJ6QfYa61+2AUhWsJB1cLlpMUoLBdTnbY5b11HRKL6MXJQjhH4tJvyZM=
+  on:
+    tags: true
+    repo: EHDFE/ehdev-configer-spa
