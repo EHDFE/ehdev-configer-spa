@@ -1,7 +1,7 @@
 {
   "name": "ehdev-configer-spa",
   "version": "0.0.7",
-  "description": "",
+  "description": "ehdev-shell's config for spa project",
   "main": "index.js",
   "scripts": {
     "test": "mocha",

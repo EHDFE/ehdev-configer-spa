@@ -77,7 +77,7 @@ module.exports = async (PROJECT_CONFIG, options) => {
                   require.resolve('babel-preset-env'),
                   {
                     targets: {
-                      browsers: PROJECT_CONFIG.browerSupports.PRODUCTION,
+                      browsers: PROJECT_CONFIG.browserSupports.PRODUCTION,
                     }, 
                     module: false,
                     useBuiltIns: PROJECT_CONFIG.babelUseBuiltIns,
@@ -122,7 +122,7 @@ module.exports = async (PROJECT_CONFIG, options) => {
                         ident: 'postcss',
                         plugins: () => [
                           autoprefixer({
-                            browsers: PROJECT_CONFIG.browerSupports.PRODUCTION,
+                            browsers: PROJECT_CONFIG.browserSupports.PRODUCTION,
                           }),
                         ],
                       },
