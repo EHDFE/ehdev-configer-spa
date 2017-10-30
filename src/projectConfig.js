@@ -23,6 +23,12 @@ module.exports = {
     DEVELOPMENT: ['last 2 versions'],
     PRODUCTION: ['last 2 versions'],
   },
+  dll: {
+    enable: false,
+    enclude: [],
+  },
+  providePluginConfig: {
+  },
   babelUseBuiltIns: true,
   // valid in dev environment
   https: false,
