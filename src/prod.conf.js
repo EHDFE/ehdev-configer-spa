@@ -44,6 +44,35 @@ module.exports = async (PROJECT_CONFIG, options) => {
     publicPath: PUBLIC_PATH,
   };
 
+  const babelLoaderConfig = {
+    loader: require.resolve('babel-loader'),
+    options: {
+      // @remove-on-eject-begin
+      babelrc: false,
+      presets: [
+        [
+          require.resolve('babel-preset-env'),
+          {
+            targets: {
+              browsers: PROJECT_CONFIG.browserSupports.PRODUCTION,
+            }, 
+            module: false,
+            useBuiltIns: PROJECT_CONFIG.babelUseBuiltIns,
+          }
+        ]
+      ].concat(
+        PROJECT_CONFIG.framework === 'react' ? [
+          require.resolve('babel-preset-react'),
+          require.resolve('babel-preset-stage-1'),
+        ] : [
+          require.resolve('babel-preset-stage-1'),
+        ]
+      ),
+      // @remove-on-eject-end
+      compact: true,
+    },
+  };
+
   // module config
   const module = {
     rules: [
@@ -63,38 +92,30 @@ module.exports = async (PROJECT_CONFIG, options) => {
               name: '[name].[hash:8].[ext]',
             },
           },
-          // Process JS with Babel.
           {
+            test: /\.svg$/,
+            include: SOURCE_DIR,
+            resourceQuery: /reactComponent/,
+            use: [
+              babelLoaderConfig,
+              {
+                loader: require.resolve('react-svg-loader'),
+                options: {
+                  svgo: {
+                    floatPrecision: 2,
+                    plugins: [{
+                      cleanupIDs: false,
+                    }],
+                  },
+                },
+              },
+            ],
+          },
+          // Process JS with Babel.
+          Object.assign({
             test: /\.jsx?$/,
             include: SOURCE_DIR,
-            // include: paths.appSrc,
-            loader: require.resolve('babel-loader'),
-            options: {
-              // @remove-on-eject-begin
-              babelrc: false,
-              presets: [
-                [
-                  require.resolve('babel-preset-env'),
-                  {
-                    targets: {
-                      browsers: PROJECT_CONFIG.browserSupports.PRODUCTION,
-                    }, 
-                    module: false,
-                    useBuiltIns: PROJECT_CONFIG.babelUseBuiltIns,
-                  }
-                ]
-              ].concat(
-                PROJECT_CONFIG.framework === 'react' ? [
-                  require.resolve('babel-preset-react'),
-                  require.resolve('babel-preset-stage-1'),
-                ] : [
-                  require.resolve('babel-preset-stage-1'),
-                ]
-              ),
-              // @remove-on-eject-end
-              compact: true,
-            },
-          },
+          }, babelLoaderConfig),
           {
             test: /\.(le|c)ss$/,
             loader: ExtractTextPlugin.extract(
@@ -172,7 +193,6 @@ module.exports = async (PROJECT_CONFIG, options) => {
         filename: d.page,
         template: path.join(APP_DIR, d.page),
         chunks: [
-          // 'assets/commonLibs',
           d.name,
         ],
         minify: {

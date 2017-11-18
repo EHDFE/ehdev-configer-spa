@@ -22,3 +22,15 @@
 | dll | `{ enable: false, enclude: [] }` | 是否启用 dll，enclude 提供打入 dll 包的模块 |
 | providePluginConfig | `{}` | 主要用来支持 jQuery 依赖全局挂载的老模块， 参考 [https://webpack.js.org/plugins/provide-plugin/](https://webpack.js.org/plugins/provide-plugin/) |
 | https | false | 开发环境的 https 支持 |
+
+## 使用说明
+
+### svg 用法
+
+引用 svg 路径后加上 `?reactComponnet` ，svg 会被转换成 react component
+否则 svg 会被当成普通的资源文件，使用 file-loader 加载
+
+```js
+import Foo from './foo.svg?reactComponnet';
+<Foo />
+```

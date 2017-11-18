@@ -24,19 +24,20 @@ module.exports = async (PROJECT_CONFIG, options) => {
 
   // entry config
   const entry = {};
+  const devServerEntry = [
+    `${require.resolve(`${path.join(SHELL_NODE_MODULES_PATH, 'webpack-dev-server')}/client`)}?http://localhost:${options.port}`,
+    require.resolve(`${path.join(SHELL_NODE_MODULES_PATH, 'webpack')}/hot/dev-server`),
+  ];
+  if (PROJECT_CONFIG.framework === 'react') {
+    devServerEntry.unshift(require.resolve('react-hot-loader/patch'));
+  }
 
   appPages.forEach(d => {
     const scripts = [
       path.join(APP_DIR, `${d.name}.js`),
     ];
     if (PROJECT_CONFIG.enableHotModuleReplacement) {
-      scripts.unshift(
-        `${require.resolve(`${path.join(SHELL_NODE_MODULES_PATH, 'webpack-dev-server')}/client`)}?http://localhost:${options.port}`,
-        require.resolve(`${path.join(SHELL_NODE_MODULES_PATH, 'webpack')}/hot/dev-server`),
-      );
-      if (PROJECT_CONFIG.framework === 'react') {
-        scripts.unshift(require.resolve('react-hot-loader/patch'));
-      }
+      scripts.unshift(...devServerEntry);
     }
     Object.assign(entry, {
       [d.name]: scripts,
@@ -50,6 +51,38 @@ module.exports = async (PROJECT_CONFIG, options) => {
     pathinfo: true,
     publicPath: PUBLIC_PATH,
   };
+
+  const babelLoaderConfig = {
+    loader: require.resolve('babel-loader'),
+    options: {
+      // @remove-on-eject-begin
+      babelrc: false,
+      presets: [
+        [
+          require.resolve('babel-preset-env'),
+          {
+            targets: {
+              browsers: PROJECT_CONFIG.browserSupports.DEVELOPMENT,
+            }, 
+            module: false,
+            useBuiltIns: PROJECT_CONFIG.babelUseBuiltIns,
+          }
+        ]
+      ].concat(
+        PROJECT_CONFIG.framework === 'react' ? [
+          require.resolve('babel-preset-react'),
+          require.resolve('babel-preset-stage-1'),
+        ] : [
+          require.resolve('babel-preset-stage-1'),
+        ]
+      ),
+      // @remove-on-eject-end
+      // This is a feature of `babel-loader` for webpack (not Babel itself).
+      // It enables caching results in ./node_modules/.cache/babel-loader/
+      // directory for faster rebuilds.
+      cacheDirectory: true,
+    },
+  }
 
   // module config
   const module = {
@@ -70,40 +103,30 @@ module.exports = async (PROJECT_CONFIG, options) => {
               name: '[name].[hash:8].[ext]',
             },
           },
-          // Process JS with Babel.
           {
+            test: /\.svg$/,
+            include: SOURCE_DIR,
+            resourceQuery: /reactComponent/,
+            use: [
+              babelLoaderConfig,
+              {
+                loader: require.resolve('react-svg-loader'),
+                options: {
+                  svgo: {
+                    floatPrecision: 2,
+                    plugins: [{
+                      cleanupIDs: false,
+                    }],
+                  },
+                },
+              },
+            ],
+          },
+          // Process JS with Babel.
+          Object.assign({
             test: /\.jsx?$/,
             include: SOURCE_DIR,
-            loader: require.resolve('babel-loader'),
-            options: {
-              // @remove-on-eject-begin
-              babelrc: false,
-              presets: [
-                [
-                  require.resolve('babel-preset-env'),
-                  {
-                    targets: {
-                      browsers: PROJECT_CONFIG.browserSupports.DEVELOPMENT,
-                    }, 
-                    module: false,
-                    useBuiltIns: PROJECT_CONFIG.babelUseBuiltIns,
-                  }
-                ]
-              ].concat(
-                PROJECT_CONFIG.framework === 'react' ? [
-                  require.resolve('babel-preset-react'),
-                  require.resolve('babel-preset-stage-1'),
-                ] : [
-                  require.resolve('babel-preset-stage-1'),
-                ]
-              ),
-              // @remove-on-eject-end
-              // This is a feature of `babel-loader` for webpack (not Babel itself).
-              // It enables caching results in ./node_modules/.cache/babel-loader/
-              // directory for faster rebuilds.
-              cacheDirectory: true,
-            },
-          },
+          }, babelLoaderConfig),
           {
             test: /\.(le|c)ss$/,
             use: [
@@ -175,7 +198,6 @@ module.exports = async (PROJECT_CONFIG, options) => {
         filename: d.page,
         template: path.join(APP_DIR, d.page),
         chunks: [
-          // 'assets/commonLibs',
           d.name,
         ],
         minify: {

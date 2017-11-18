@@ -25,7 +25,7 @@ module.exports = {
   },
   dll: {
     enable: false,
-    enclude: [],
+    include: [],
   },
   providePluginConfig: {
   },

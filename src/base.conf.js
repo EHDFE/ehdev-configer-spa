@@ -5,6 +5,7 @@
  */
 const path = require('path');
 const SHELL_NODE_MODULES_PATH = process.env.SHELL_NODE_MODULES_PATH;
+const CONFIGER_FOLDER_PATH = process.env.CONFIGER_FOLDER_PATH;
 const webpack = require(path.join(SHELL_NODE_MODULES_PATH, 'webpack'));
 const { SOURCE_DIR } = require('./lib');
 
@@ -21,7 +22,11 @@ module.exports = async (PROJECT_CONFIG, options) => {
       // https://github.com/facebookincubator/create-react-app/issues/290
       // `web` extension prefixes have been added for better support
       // for React Native Web.
-      extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx'],
+      extensions: ['.web.js', '.js', '.json', '.jsx'],
+      modules: [
+        'node_modules',
+        path.join(CONFIGER_FOLDER_PATH, 'node_modules'),
+      ],
     },
     module: {
       strictExportPresence: true,
