@@ -22,6 +22,7 @@
 | dll | `{ enable: false, enclude: [] }` | 是否启用 dll，enclude 提供打入 dll 包的模块 |
 | providePluginConfig | `{}` | 主要用来支持 jQuery 依赖全局挂载的老模块， 参考 [https://webpack.js.org/plugins/provide-plugin/](https://webpack.js.org/plugins/provide-plugin/) |
 | https | false | 开发环境的 https 支持 |
+| publicPath | `../` | `webpackConfig.output.publicPath`, 只在构建时生效 |
 
 ## 使用说明
 

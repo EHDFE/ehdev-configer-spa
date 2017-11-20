@@ -32,4 +32,5 @@ module.exports = {
   babelUseBuiltIns: true,
   // valid in dev environment
   https: false,
+  publicPath: '../',
 };
