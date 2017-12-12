@@ -118,43 +118,39 @@ module.exports = async (PROJECT_CONFIG, options) => {
           }, babelLoaderConfig),
           {
             test: /\.(le|c)ss$/,
-            loader: ExtractTextPlugin.extract(
-              Object.assign(
-                {
-                  fallback: {
-                    loader: require.resolve('style-loader'),
-                    options: {
-                      hmr: false,
-                    },
-                  },
-                  use: [
-                    {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        importLoaders: 1,
-                        minimize: true,
-                      },
-                    },
-                    {
-                      loader: require.resolve('postcss-loader'),
-                      options: {
-                        // Necessary for external CSS imports to work
-                        // https://github.com/facebookincubator/create-react-app/issues/2677
-                        ident: 'postcss',
-                        plugins: () => [
-                          autoprefixer({
-                            browsers: PROJECT_CONFIG.browserSupports.PRODUCTION,
-                          }),
-                        ],
-                      },
-                    },
-                    {
-                      loader: require.resolve('less-loader'),
-                    }
-                  ],
+            loader: ExtractTextPlugin.extract({
+              fallback: {
+                loader: require.resolve('style-loader'),
+                options: {
+                  hmr: false,
                 },
-              )
-            ),
+              },
+              use: [
+                {
+                  loader: require.resolve('css-loader'),
+                  options: {
+                    importLoaders: 1,
+                    minimize: true,
+                  },
+                },
+                {
+                  loader: require.resolve('postcss-loader'),
+                  options: {
+                    // Necessary for external CSS imports to work
+                    // https://github.com/facebookincubator/create-react-app/issues/2677
+                    ident: 'postcss',
+                    plugins: () => [
+                      autoprefixer({
+                        browsers: PROJECT_CONFIG.browserSupports.PRODUCTION,
+                      }),
+                    ],
+                  },
+                },
+                {
+                  loader: require.resolve('less-loader'),
+                }
+              ],
+            }),
           },
           {
             test: /\.html?$/,
