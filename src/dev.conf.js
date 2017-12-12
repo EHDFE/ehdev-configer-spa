@@ -218,9 +218,13 @@ module.exports = async (PROJECT_CONFIG, options) => {
   plugins.push(
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
-    // This is necessary to emit hot updates (currently CSS only):
-    new webpack.HotModuleReplacementPlugin(),
   );
+  if (PROJECT_CONFIG.enableHotModuleReplacement) {
+    plugins.push(
+      // This is necessary to emit hot updates (currently CSS only):
+      new webpack.HotModuleReplacementPlugin(),
+    );
+  }
 
   Object.assign(configResult, {
     entry,

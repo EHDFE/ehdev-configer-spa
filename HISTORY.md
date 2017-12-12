@@ -1,5 +1,17 @@
 # HISTORY
 
+## v0.0.10
+---
+FEATURE:
+  - add `supportIE8`
+  
+CHANGE:
+  - remove `uglifyPlugin` from `prod.conf.js`
+
+## v0.0.9
+---
+FEATURE:
+  - add `publicPath` in projectConfig
 
 ## v0.0.8
 ---
@@ -8,8 +20,3 @@ FIX:
 
 FEATURES:
 - supports `svg to react component` feature.
-
-## v0.0.9
----
-FEATURE:
-  - add `publicPath` in projectConfig
