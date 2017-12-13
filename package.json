@@ -1,6 +1,6 @@
 {
   "name": "ehdev-configer-spa",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "ehdev-shell's config for spa project",
   "main": "index.js",
   "scripts": {
