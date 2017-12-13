@@ -11,7 +11,14 @@ const { camelCase } = require('lodash');
 const autoprefixer = require('autoprefixer');
 const WebpackChunkHash = require('webpack-chunk-hash');
 
-const { PROJECT_ROOT, APP_DIR, SOURCE_DIR, getFilesByExtName } = require('./lib');
+const {
+  PROJECT_ROOT,
+  APP_DIR,
+  SOURCE_DIR,
+  getFilesByExtName,
+  getHtmlLoaderConfig,
+  getLoaderOptionPlugin,
+} = require('./lib');
 const PUBLIC_PATH = '/';
 
 module.exports = async (PROJECT_CONFIG, options) => {
@@ -152,18 +159,7 @@ module.exports = async (PROJECT_CONFIG, options) => {
               ],
             }),
           },
-          {
-            test: /\.html?$/,
-            use: [
-              {
-                loader: require.resolve('html-loader'),
-                options: {
-                  interpolate: true,
-                  root: './',
-                },
-              },
-            ],
-          },
+          getHtmlLoaderConfig(PROJECT_CONFIG),
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
           // This loader doesn't use a "test" so it will catch all modules
@@ -216,6 +212,7 @@ module.exports = async (PROJECT_CONFIG, options) => {
     }),
     new webpack.HashedModuleIdsPlugin(),
     new WebpackChunkHash(),
+    getLoaderOptionPlugin(PROJECT_CONFIG),
     new ExtractTextPlugin({
       filename: '[name].[contenthash:8].css',
     }),

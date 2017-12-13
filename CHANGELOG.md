@@ -1,9 +1,9 @@
-# HISTORY
+# CHANGELOG
 
 ## v0.0.10
 ---
 FEATURE:
-  - add `supportIE8`
+  - add `posthtml-loader` and `posthtml-expression`, which supports  local variables and expressions in your html templates
   
 CHANGE:
   - remove `uglifyPlugin` from `prod.conf.js`

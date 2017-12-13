@@ -8,7 +8,14 @@ const HtmlWebpackPlugin = require(path.join(SHELL_NODE_MODULES_PATH, 'html-webpa
 const { camelCase } = require('lodash');
 const autoprefixer = require('autoprefixer');
 
-const { PROJECT_ROOT, APP_DIR, getFilesByExtName, SOURCE_DIR } = require('./lib');
+const {
+  PROJECT_ROOT,
+  APP_DIR,
+  getFilesByExtName,
+  SOURCE_DIR,
+  getHtmlLoaderConfig,
+  getLoaderOptionPlugin,
+} = require('./lib');
 const PUBLIC_PATH = '/';
 
 module.exports = async (PROJECT_CONFIG, options) => {
@@ -156,18 +163,7 @@ module.exports = async (PROJECT_CONFIG, options) => {
               }
             ],
           },
-          {
-            test: /\.html?$/,
-            use: [
-              {
-                loader: require.resolve('html-loader'),
-                options: {
-                  interpolate: true,
-                  root: './',
-                },
-              },
-            ],
-          },
+          getHtmlLoaderConfig(PROJECT_CONFIG),
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
           // In production, they would get copied to the `build` folder.
@@ -218,6 +214,7 @@ module.exports = async (PROJECT_CONFIG, options) => {
   plugins.push(
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),
+    getLoaderOptionPlugin(PROJECT_CONFIG),
   );
   if (PROJECT_CONFIG.enableHotModuleReplacement) {
     plugins.push(
