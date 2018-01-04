@@ -33,7 +33,7 @@
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "lodash": "^4.17.4",
-    "postcss-loader": "^2.0.8",
+    "postcss-loader": "^2.0.10",
     "posthtml-expressions": "^1.1.0",
     "posthtml-loader": "^1.0.1",
     "react": "^16.2.0",
