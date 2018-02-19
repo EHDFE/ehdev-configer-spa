@@ -28,7 +28,7 @@
     "babel-preset-stage-1": "^6.24.1",
     "case-sensitive-paths-webpack-plugin": "^2.1.1",
     "css-loader": "^0.28.7",
-    "file-loader": "^1.1.5",
+    "file-loader": "^1.1.7",
     "html-loader": "^0.5.1",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
