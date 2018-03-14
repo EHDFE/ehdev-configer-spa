@@ -35,9 +35,6 @@ module.exports = async (PROJECT_CONFIG, options) => {
     `${require.resolve(`${path.join(SHELL_NODE_MODULES_PATH, 'webpack-dev-server')}/client`)}?http://localhost:${options.port}`,
     require.resolve(`${path.join(SHELL_NODE_MODULES_PATH, 'webpack')}/hot/dev-server`),
   ];
-  if (PROJECT_CONFIG.framework === 'react') {
-    devServerEntry.unshift(require.resolve('react-hot-loader/patch'));
-  }
 
   appPages.forEach(d => {
     const scripts = [
@@ -89,6 +86,12 @@ module.exports = async (PROJECT_CONFIG, options) => {
       // directory for faster rebuilds.
       cacheDirectory: true,
     },
+  }
+
+  if (PROJECT_CONFIG.framework === 'react') {
+    babelLoaderConfig.options.plugins = [
+      'react-hot-loader/babel',
+    ];
   }
 
   // module config

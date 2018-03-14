@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.1.0
+---
+FEATURE:
+  - support webpack 4
+
 ## v0.0.10
 ---
 FEATURE:
