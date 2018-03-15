@@ -90,7 +90,7 @@ module.exports = async (PROJECT_CONFIG, options) => {
 
   if (PROJECT_CONFIG.framework === 'react') {
     babelLoaderConfig.options.plugins = [
-      'react-hot-loader/babel',
+      require.resolve('react-hot-loader/babel')
     ];
   }
 
@@ -163,6 +163,9 @@ module.exports = async (PROJECT_CONFIG, options) => {
               },
               {
                 loader: require.resolve('less-loader'),
+                options: {
+                  javascriptEnabled: true,
+                },
               }
             ],
           },
