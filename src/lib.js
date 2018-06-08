@@ -47,7 +47,8 @@ exports.getHtmlLoaderConfig = PROJECT_CONFIG => ({
           require('posthtml-expressions')({
             locals:{
               env: process.env.NODE_ENV, 
-            }
+            },
+            delimiters: ['<%', '%>'],
           })
         ],
       },
@@ -63,7 +64,8 @@ exports.getLoaderOptionPlugin = PROJECT_CONFIG => new webpack.LoaderOptionsPlugi
           require('posthtml-expressions')({
             locals:{
               env: process.env.NODE_ENV, 
-            }
+            },
+            delimiters: ['<%', '%>'],
           })
         ],
       };
