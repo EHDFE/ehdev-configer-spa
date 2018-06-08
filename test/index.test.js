@@ -58,13 +58,14 @@ describe('exports methods: <<getProdConfig>> and <<getDevConfig>>', () => {
       'plugins',
       'node',
       'devtool',
+      'optimization',
     );
     expect(prodConfig.resolve.extensions).to.eql(
       ['.web.js', '.js', '.json', '.jsx']
     );
     expect(prodConfig.module.strictExportPresence).to.be.true;
     expect(prodConfig.module.rules[0].oneOf).to.have.lengthOf(6);
-    expect(prodConfig.plugins).to.have.lengthOf(8);
+    expect(prodConfig.plugins).to.have.lengthOf(7);
   });
 
 });

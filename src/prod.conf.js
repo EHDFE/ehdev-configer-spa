@@ -5,11 +5,14 @@ const path = require('path');
 const SHELL_NODE_MODULES_PATH = process.env.SHELL_NODE_MODULES_PATH;
 const webpack = require(path.join(SHELL_NODE_MODULES_PATH, 'webpack'));
 const HtmlWebpackPlugin = require(path.join(SHELL_NODE_MODULES_PATH, 'html-webpack-plugin'));
-const ExtractTextPlugin = require(path.join(SHELL_NODE_MODULES_PATH, 'extract-text-webpack-plugin'));
+const UglifyJsPlugin = require(path.join(SHELL_NODE_MODULES_PATH, 'uglifyjs-webpack-plugin'));
+// const ExtractTextPlugin = require(path.join(SHELL_NODE_MODULES_PATH, 'extract-text-webpack-plugin'));
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require(path.join(SHELL_NODE_MODULES_PATH, 'clean-webpack-plugin'));
 const { camelCase } = require('lodash');
 const autoprefixer = require('autoprefixer');
-const WebpackChunkHash = require('webpack-chunk-hash');
+// const WebpackChunkHash = require('webpack-chunk-hash');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const {
   PROJECT_ROOT,
@@ -125,42 +128,35 @@ module.exports = async (PROJECT_CONFIG, options) => {
           }, babelLoaderConfig),
           {
             test: /\.(le|c)ss$/,
-            loader: ExtractTextPlugin.extract({
-              fallback: {
-                loader: require.resolve('style-loader'),
+            use: [
+              MiniCssExtractPlugin.loader,
+              {
+                loader: require.resolve('css-loader'),
                 options: {
-                  hmr: false,
+                  importLoaders: 1,
+                  minimize: true,
                 },
               },
-              use: [
-                {
-                  loader: require.resolve('css-loader'),
-                  options: {
-                    importLoaders: 1,
-                    minimize: true,
-                  },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  // Necessary for external CSS imports to work
+                  // https://github.com/facebookincubator/create-react-app/issues/2677
+                  ident: 'postcss',
+                  plugins: () => [
+                    autoprefixer({
+                      browsers: PROJECT_CONFIG.browserSupports.PRODUCTION,
+                    }),
+                  ],
                 },
-                {
-                  loader: require.resolve('postcss-loader'),
-                  options: {
-                    // Necessary for external CSS imports to work
-                    // https://github.com/facebookincubator/create-react-app/issues/2677
-                    ident: 'postcss',
-                    plugins: () => [
-                      autoprefixer({
-                        browsers: PROJECT_CONFIG.browserSupports.PRODUCTION,
-                      }),
-                    ],
-                  },
+              },
+              {
+                loader: require.resolve('less-loader'),
+                options: {
+                  javascriptEnabled: true,
                 },
-                {
-                  loader: require.resolve('less-loader'),
-                  options: {
-                    javascriptEnabled: true,
-                  },
-                }
-              ],
-            }),
+              }
+            ],
           },
           getHtmlLoaderConfig(PROJECT_CONFIG),
           // "file" loader makes sure assets end up in the `build` folder.
@@ -214,9 +210,9 @@ module.exports = async (PROJECT_CONFIG, options) => {
       dry: false,
     }),
     new webpack.HashedModuleIdsPlugin(),
-    new WebpackChunkHash(),
+    // new WebpackChunkHash(),
     getLoaderOptionPlugin(PROJECT_CONFIG),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: '[name].[contenthash:8].css',
     }),
   );
@@ -229,6 +225,20 @@ module.exports = async (PROJECT_CONFIG, options) => {
     module,
     plugins,
     devtool: 'source-map',
+    optimization: {
+      minimizer: [
+        new UglifyJsPlugin({
+          cache: true,
+          sourceMap: true,
+          parallel: true,
+        }),
+        new OptimizeCssAssetsPlugin({
+          cssProcessorOptions: {
+            zindex: false,
+          },
+        }),
+      ],
+    },
   });
 
   return configResult;
