@@ -65,7 +65,7 @@ describe('exports methods: <<getProdConfig>> and <<getDevConfig>>', () => {
     );
     expect(prodConfig.module.strictExportPresence).to.be.true;
     expect(prodConfig.module.rules[0].oneOf).to.have.lengthOf(6);
-    expect(prodConfig.plugins).to.have.lengthOf(7);
+    expect(prodConfig.plugins).to.have.lengthOf(8);
   });
 
 });

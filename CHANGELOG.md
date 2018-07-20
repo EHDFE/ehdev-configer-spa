@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.1.4
+---
+FEATURE:
+  - 🚀 use happypack for increasing building performance.
+
 ## v0.1.0
 ---
 FEATURE:
