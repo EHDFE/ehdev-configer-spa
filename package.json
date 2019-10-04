@@ -43,7 +43,7 @@
     "react-hot-loader": "^4.3.0",
     "react-svg-loader": "2.1.0",
     "style-loader": "^0.22.1",
-    "url-loader": "^1.0.1",
+    "url-loader": "^2.2.0",
     "webpack-chunk-hash": "^0.6.0",
     "webpack-merge": "^4.1.3"
   },
